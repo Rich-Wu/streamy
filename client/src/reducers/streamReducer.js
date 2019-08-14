@@ -1,13 +1,11 @@
 export default (state = {}, action) => {
   switch (action.type) {
-    // EXPERIMENTAL BELOW
     case 'FETCH_STREAMS':
       const newStreams = { ...state };
       for (let stream of action.payload) {
         newStreams[stream.id] = stream;
       }
       return newStreams;
-    // END EXPERIMENTAL
     case 'CREATE_STREAM':
       return {
         ...state,
