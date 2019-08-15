@@ -5,7 +5,7 @@ import StreamForm from './StreamForm';
 
 class StreamEdit extends Component {
   onSubmit = formValues => {
-    this.props.editStream(this.props.match.params.id, formValues);
+    this.props.editStream(this.props.match.params.id, formValues, this.props.userId);
   }
 
   componentDidMount() {
@@ -31,7 +31,10 @@ class StreamEdit extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  return {stream: state.streams[ownProps.match.params.id]};
-}
+  return {
+    stream: state.streams[ownProps.match.params.id],
+    userId: state.auth.userId
+  };
+};
 
 export default connect(mapStateToProps, {fetchStream, editStream})(StreamEdit);

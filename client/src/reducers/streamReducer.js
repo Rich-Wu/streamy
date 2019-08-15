@@ -21,7 +21,6 @@ export default (state = {}, action) => {
         ...state,
         [action.payload.id]: action.payload
       };
-    // EXPERIMENTAL BELOW
     case 'DELETE_STREAM':
       const newState = {};
       for (let key in state) {
@@ -29,7 +28,6 @@ export default (state = {}, action) => {
         newState[key] = state[key];
       }
       return newState;
-    // END EXPERIMENTAL
     default:
       return state;
   }

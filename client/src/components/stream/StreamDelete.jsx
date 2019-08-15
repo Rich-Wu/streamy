@@ -1,34 +1,51 @@
-import React from 'react';
-import Modal from '../Modal';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {deleteStream} from '../../actions';
+import {Link} from 'react-router-dom';
+import Modal from '../Modal';
+import {deleteStream, fetchStream} from '../../actions';
 import history from '../../history';
 
-const StreamDelete = (props) => {
-  const cancel = () => history.push('/');
+class StreamDelete extends Component {
+  cancel = () => history.push('/');
 
-  const onSubmit = () => {
-    props.deleteStream(props.match.params.id);
+  onSubmit = () => {
+    this.props.deleteStream(this.props.match.params.id, this.props.userId);
   };
 
-  const renderActions = (
+  renderActions = (
     <React.Fragment>
-      <button className="button ui primary" onClick={onSubmit}>Delete</button>
-      <button className="button ui" onClick={cancel}>Cancel</button>
+      <button className="button ui primary" onClick={this.onSubmit}>Delete</button>
+      <Link className="button ui" to="/">Cancel</Link>
     </React.Fragment>
   );
 
-  return (
-    <div>
+  renderContent = () => {
+    if (!this.props.stream) return "Are you sure you wish to delete this stream?";
+    return `Are you sure you wish to delete "${this.props.stream.title}"?`;
+  }
+
+  componentDidMount() {
+    this.props.fetchStream(this.props.match.params.id);
+  }
+
+  render() {
+    return (
       <Modal
-        onSubmit={onSubmit}
+        onSubmit={this.onSubmit}
         header='Delete Stream'
-        content='Are you sure you wish to delete this stream?'
-        action={renderActions}
-        redirect={cancel}
+        content={this.renderContent()}
+        action={this.renderActions}
+        redirect={this.cancel}
       />
-    </div>
-  );
+    );
+  }
 };
 
-export default connect(null, {deleteStream})(StreamDelete);
+const mapStateToProps = (state, ownProps) => {
+  return {
+    stream: state.streams[ownProps.match.params.id],
+    userId: state.auth.userId
+  }
+}
+
+export default connect(mapStateToProps, {deleteStream, fetchStream})(StreamDelete);
