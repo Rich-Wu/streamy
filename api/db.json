@@ -1,26 +1,25 @@
 {
   "streams": [
     {
-      "title": "My Stream",
-      "description": "Great!",
-      "id": 1
-    },
-    {
       "title": "Other Stream",
       "description": "Here's another",
       "id": 2
     },
     {
-      "title": "Has Creator",
-      "description": "Godly",
+      "title": "Programming Made Fun!",
+      "description": "Programming Exercises",
       "userId": "103632620106343020219",
-      "id": 3
+      "id": 5
     },
     {
-      "title": "Unexpected Behavior",
-      "description": "Didn't expect that",
-      "userId": "103632620106343020219",
-      "id": 4
+      "title": "Code Reuse",
+      "description": "Wow! Refactored!",
+      "id": 6
+    },
+    {
+      "title": "Testing!",
+      "description": "Stream Test",
+      "id": 7
     }
   ]
 }
