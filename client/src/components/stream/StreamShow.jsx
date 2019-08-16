@@ -19,24 +19,33 @@ class StreamShow extends Component {
   }
 
   buildPlayer() {
-    if (this.player || !this.props.stream) return;
+    if (this.player || !this.props.stream || !flv.isSupported()) return;
     this.player = flv.createPlayer({
       type: 'flv',
-      url: `http://localhost:8000/live/${this.props.match.params.id}.flv`
+      url: `http://192.168.1.11:8000/live/${this.props.match.params.id}.flv`
     });
     this.player.attachMediaElement(this.videoRef.current);
     this.player.load();
   }
 
   componentWillUnmount() {
-    this.player.destroy();
+    if (this.player) this.player.destroy();
   }
 
   render() {
     if (!this.props.stream) return <div>loading...</div>
     return (
       <div>
-        <video ref={this.videoRef} style={{ width: '100%' }} controls/>
+        <video
+          ref={this.videoRef}
+          style={{ width: '100%' }}
+          controls
+        >
+          <source
+            src={`http://192.168.1.11:8000/live/${this.props.match.params.id}/index.m3u8`}
+            type='application/x-mpegURL'
+          />
+        </video>
         <h1>{this.props.stream.title}</h1>
         <h5>{this.props.stream.description}</h5>
       </div>
